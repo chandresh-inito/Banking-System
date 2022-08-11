@@ -1,0 +1,20 @@
+<div id="current_account_withdrawal_form">
+    <h2> Withdrawal Money </h2>
+    <%= form_with url: "/current_account_withdrawal" , method: :post do |form| %>
+        
+        <%= form.label :first_name   %>
+        <%= form.text_field :first_name %><br/>
+        
+        <%= form.label :email   %>
+        <%= form.email_field :email %><br/>
+
+        <%= form.label :dob   %>
+        <%= form.date_field :dob %><br/>
+
+        <%= form.label :withdrawal_amount   %>
+        <%= form.number_field :withdrawal_amount %><br/>
+        
+        <%= form.submit "Withdrawal" %>
+
+    <%end %>
+</div>

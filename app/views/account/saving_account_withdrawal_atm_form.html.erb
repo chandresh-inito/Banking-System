@@ -1,0 +1,28 @@
+<div id="saving_account_withdrawal_atm_form">
+    <h2> Withdrawal Through Atm </h2>
+    
+    <%= form_with url: "/saving_account_withdrawal_atm" , method: :post do |form| %> 
+        
+        <%= form.label :first_name   %>
+        <%= form.text_field :first_name %><br/>
+        
+        <%= form.label :email   %>
+        <%= form.email_field :email %><br/>
+
+        <%= form.label :dob   %>
+        <%= form.date_field :dob %><br/>
+
+        <%= form.label :atm_card   %>
+        <%= form.number_field :atm_card %><br/>
+
+        <%= form.label :cvv  %>
+        <%= form.number_field :cvv %><br/>
+
+        <%= form.label :withdrawal_amount   %>
+        <%= form.number_field :withdrawal_amount %><br/>
+        
+        <%= form.submit "Withdrawal" %>
+
+    <%end %>
+
+</div>

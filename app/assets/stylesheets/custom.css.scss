@@ -1,0 +1,235 @@
+@import 'bootstrap/dist/css/bootstrap';
+
+#welcome_page{
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+    border-radius: 7px;
+    padding: 10px;
+    margin-top: 7%;
+}
+
+#sign_up{
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+    border-radius: 7px;
+    padding: 10px;
+    margin-top: 7%;
+    
+}
+
+#log_in{
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+    border-radius: 7px;
+    padding: 10px;
+    margin-top: 7%;
+}
+
+#withdrawal_page{
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+    border-radius: 7px;
+    padding: 10px;
+    margin-top: 7%;
+}
+
+#current_account_withdrawal_form{
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+    border-radius: 7px;
+    padding: 10px;
+    margin-top: 7%;
+}
+
+#saving_account_withdrawal_page{
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+    border-radius: 7px;
+    padding: 10px;
+    margin-top: 7%;
+}
+
+#credit_form{
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+    border-radius: 7px;
+    padding: 10px;
+    margin-top: 7%;
+}
+
+#open_account{
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+    border-radius: 7px;
+    padding: 10px;
+    margin-top: 7%;
+}
+
+#saving_account_withdrawal_direct_form{
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+    border-radius: 7px;
+    padding: 10px;
+    margin-top: 7%;
+}
+
+#saving_account_withdrawal_atm_form{
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+    border-radius: 7px;
+    padding: 10px;
+    margin-top: 7%;
+}
+
+
+
+#user_homepage{
+    margin: auto;
+    width: 60%;
+    // border: 3px solid green;
+    // padding: 10px;
+    margin-top: 15%;
+    margin-left: 25%;
+    // background-color: rgb(225, 234, 250);
+}
+
+.transaction_list {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    margin-top: 2%;
+    width: 100%;
+}
+
+// table tr td:hover {
+//     height: 70px;
+//     background-size: contain;
+// }
+
+.transaction_list td,
+.transaction_list th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.transaction_list tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.transaction_list tr:hover {
+    background-color: #ddd;
+}
+
+.transaction_list th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #679ceb;
+    color: white;
+}
+
+.transaction_list th text{
+    color: black;
+}
+
+#user_details{
+    margin: auto;
+    width: 45%;
+    border: 3px solid green;
+    border-radius: 7px;
+    padding: 10px;
+    margin-top: 3%;
+}
+
+.btn:hover {
+background-color: rgb(173, 172, 171);
+}
+
+#user_dashboard{
+    margin: auto;
+    width: 90%;
+    padding: 10px;
+    margin-top: 10%;
+    margin-left: 8%;
+    
+}
+
+
+.admin_list {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    margin-top: 2%;
+    width: 100%;
+}
+
+.admin_list td,
+.admin_list th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.admin_list tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.admin_list tr:hover {
+    background-color: #ddd;
+}
+
+.admin_list th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #679ceb;
+    color: white;
+}
+
+.admin_list th text{
+    color: black;
+}
+
+
+
+.search-area {
+    margin-left: 1%
+}
+
+#new_loan_account{
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    margin-top: 10%;
+    border: 3px solid green;
+    border-radius: 7px;
+}
+
+#new_loan_deposit{
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    margin-top: 10%;
+    border: 3px solid green;
+    border-radius: 7px;
+}
+
+#loan_details{
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    margin-top: 10%;
+    border: 3px solid green;
+    border-radius: 7px;
+}
+
+// .btn{
+//     display: block;
+// }

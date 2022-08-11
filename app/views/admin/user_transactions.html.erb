@@ -1,0 +1,36 @@
+<div id="view_table">
+  <h3 > Transaction History </h3>
+
+
+   <%user_id = params[:id]%>
+  <%@user = User.find(user_id) %>
+  <%@account = @user.accounts%>
+  
+  <%@account.each do |acc|%>
+    <%@transaction = acc.transactions%>
+    <table class="transaction_list">
+        <tr>
+        <th>Id</th>
+        <th>Type of Account </th>
+        <th>Medium of Transaction</th>
+        <th>Amount</th>
+        <th>Credit/Debit</th>
+        <th>Date and Time </th>
+        </tr>
+        <tr>
+    <%@transaction.each do |f|%>
+        <tr>    
+        <td><%=f.id%></td>
+        <td><%=acc.account_type%></td>
+        <td><%=f.medium_of_transaction %></td>
+        <td><%=f.amount%></td>
+        <td><%=f.credit_debit%></td>
+        <td><%=f.created_at%></td>
+        </tr>
+    <%end%>
+    </tr>
+    </table>
+
+  <%end%>
+
+</div>

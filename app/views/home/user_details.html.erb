@@ -1,0 +1,40 @@
+
+<%if(current_user.user_type!="admin")%>
+
+  <div id="user_dashboard">
+    <div class="btn btn-outline-dark">
+      <%= link_to 'Account Details', "/account/:#{@user.id}", :class => "btn" %> 
+    </div>
+
+    <div class="btn btn-outline-dark">
+      <%= link_to 'Open Account', "/account/new" ,  :class => "btn" %> 
+    </div>
+
+    <div class="btn btn-outline-dark">
+      <%= link_to 'Deposit', "/credit_form" , :class => "btn" %>
+    </div>
+
+    <div class="btn btn-outline-dark">
+      <%= link_to 'Withdrawal', "/withdrawal_page" ,  :class => "btn" %>
+    </div>
+
+    <div class="btn btn-outline-dark">
+      <%= link_to 'Transactions', "/account",  :class => "btn" %> 
+    </div>
+
+
+    <div class="btn btn-outline-dark">
+      <%= link_to 'Apply for Loan', "/new_loan_account" ,  :class => "btn" %>
+    </div>
+
+    <div class="btn btn-outline-dark">
+      <%= link_to 'Loan Deposit', "/new_loan_deposit" ,  :class => "btn" %>
+    </div>
+
+    <div class="btn btn-outline-dark">
+      <%= link_to 'Loan Details', "/loan_details" ,  :class => "btn" %>
+    </div>
+    
+  </div>
+
+<%end%>

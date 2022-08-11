@@ -1,0 +1,50 @@
+
+
+
+<h2> All User Details </h2>
+
+<div class='search-area'>
+    <h3>Search Users</h3>
+    <%= form_tag search_path, remote: true, method: :get do %>
+        <div class="form-group row">
+            <div class="col-sm-9 no-right-padding">
+                <%= text_field_tag :user, params[:user], placeholder: "Search users by their name or email", autofocus: true, class: "form-control form-control-lg" %>
+            </div>
+            <div class="col-sm-3 no-left-padding">
+                <%= button_tag type: :submit, class: "btn btn-success" do %>
+                <%= "Search" %>
+                <% end %>
+            </div>
+        </div>
+    <% end %>
+</div>
+ <div id="user-results">
+
+ </div>
+
+<%@user = User.all%>
+
+<table class="admin_list">
+<tr>
+    <th>Id</th>
+    <th>User Name</th>
+    <th>Email</th>
+    <th>Dob</th>
+    <th>Delete</th>
+    <th>User Details</th>
+    <th>Transactions </th>
+</tr>
+<tr>
+<%@user.each do |user|%>
+<tr>
+<td><%=user.id%></td>
+<td><%=user.first_name%></td>
+<td><%=user.email%></td>
+<td><%=user.dob %></td>
+<td><%= link_to 'Delete' , "/admin/#{user.id}" , method: :delete %></td>
+<td><%= link_to 'Details' ,  "/admin/#{user.id}"  %></td>
+<td><%= link_to 'Transactions' , user_transactions_path(:id => user.id) %></td>
+</tr>
+<%end%> 
+</tr>
+</table>

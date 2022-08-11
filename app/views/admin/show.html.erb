@@ -1,0 +1,25 @@
+<div id="user_details">
+
+    <h2> Account Details </h2>
+    <p>First Name : <%=@user.first_name%> </p> 
+    <p>Last Name : <%=@user.last_name%> </p> 
+    <p>Email : <%=@user.email%> </p> 
+
+    <p>Date of Birth : <%=@user.dob.year%> - <%=@user.dob.month%> - <%=@user.dob.day%> </p> 
+    <% if Account.where(user_id:@user.id , account_type: "Saving Account").count!=0 %>
+        <%@account = Account.where(user_id:@user.id , account_type: "Saving Account").first%>
+        <p> Saving Account Number : <%=@account.account_number%> </p>
+        <p> Saving Amount : <%=@account.amount%> </p>
+        <%@atm = Atm.where(account_id:@account.id).first%>
+        <p> ATM Card Number : <%=@atm.atm_card%> </p>
+        <p> ATM CVV : <%=@atm.cvv%> </p>
+        <p> ATM Expiry : <%=@atm.expiry_date%> </p>
+    <%end%>
+
+    <% if Account.where(user_id:@user.id , account_type: "Current Account").count!=0 %>
+        <%@account = Account.where(user_id:@user.id , account_type: "Current Account").first%>
+        <p> Current Account Number : <%=@account.account_number%> </p>
+        <p> Current Amount : <%=@account.amount%> 
+    <%end%>
+
+</div>

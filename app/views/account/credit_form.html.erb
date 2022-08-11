@@ -1,0 +1,15 @@
+<div id="credit_form">
+    <h2> Deposit Amount </h2>
+
+    <%= form_with url: "/credit", method: :post do |form| %>
+            
+        <%= form.label :account_type %>
+        <%=select_tag "account_type", options_for_select([ "Saving Account", "Current Account" ], "Saving Account")%><br/>
+
+        <%= form.label :deposit_amount   %>
+        <%= form.number_field :deposit_amount %><br/>
+
+        <%= form.submit "Deposit" %>
+
+    <%end%>
+</div>

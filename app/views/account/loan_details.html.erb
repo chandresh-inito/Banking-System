@@ -1,0 +1,34 @@
+<div id="loan_details">
+    
+    <h2>Loan Details </h2>
+    <%@user = current_user %>
+
+    <%if @user.accounts.where(account_type: "Loan Account").count!=0%>
+        <p> Loan Account Number : <%=@user.accounts.where(account_type: "Loan Account").first.account_number%> <p>
+    
+        <%if @user.accounts.where(account_type: "Loan Account").first.loans.where(loan_type: "Home Loan").count!=0%>
+            <p> Home Loan Amount : <%=@user.accounts.where(account_type: "Loan Account").first.loans.where(loan_type: "Home Loan").first.principal%>  </p>
+        <%end%>
+
+        <%if @user.accounts.where(account_type: "Loan Account").first.loans.where(loan_type: "Car Loan").count!=0%>
+            <p> Car Loan Amount : <%=@user.accounts.where(account_type: "Loan Account").first.loans.where(loan_type: "Car Loan").first.principal%>  </p>
+        <%end%>
+
+        <%if @user.accounts.where(account_type: "Loan Account").first.loans.where(loan_type: "Personal Loan").count!=0%>
+            <p> Personal Loan Amount : <%=@user.accounts.where(account_type: "Loan Account").first.loans.where(loan_type: "Personal Loan").first.principal%>  </p>
+        <%end%>
+
+        <%if @user.accounts.where(account_type: "Loan Account").first.loans.where(loan_type: "Business Loan").count!=0%>
+            <p> Business Loan Amount : <%=@user.accounts.where(account_type: "Loan Account").first.loans.where(loan_type: "Business Loan").first.principal%>  </p>
+        <%end%>
+
+    <%end%>
+    
+
+    
+
+
+
+
+
+</div>

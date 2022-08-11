@@ -1,0 +1,19 @@
+<div id="open_account">
+    <h2> Open Account </h2>
+
+    <%= form_with url: "/account", method: :post do |form| %>
+            
+        <%= form.label :account_type %>
+        <%=select_tag "account_type", options_for_select([ "Saving Account", "Current Account" ], "Saving Account")%><br/>
+
+        <%= form.label :minimumn_deposit   %>
+        <%= form.text_field :minimumn_deposit %><br/>
+
+        <%= form.label :branch%>
+        <%=select_tag "branch", options_for_select([ "1", "2" , "3" , "4"], "1")%><br/>
+
+        <%= form.submit "Open" %>
+
+    <%end%>
+
+</div>

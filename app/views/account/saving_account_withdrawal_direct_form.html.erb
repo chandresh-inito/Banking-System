@@ -1,0 +1,21 @@
+<div id="saving_account_withdrawal_direct_form">
+    <h2> Withdrawal Amount Directly </h2>
+
+    <%= form_with url: "/saving_account_withdrawal_direct" , method: :post do |form| %> 
+        
+        <%= form.label :first_name   %>
+        <%= form.text_field :first_name %><br/>
+        
+        <%= form.label :email   %>
+        <%= form.email_field :email %><br/>
+
+        <%= form.label :dob   %>
+        <%= form.date_field :dob %><br/>
+
+        <%= form.label :withdrawal_amount   %>
+        <%= form.number_field :withdrawal_amount %><br/>
+        
+        <%= form.submit "Withdrawal" %>
+
+    <%end %>
+</div>

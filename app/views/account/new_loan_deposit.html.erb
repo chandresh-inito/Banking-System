@@ -1,0 +1,18 @@
+<div id="new_loan_deposit">
+    <h2> Deposit Your Loan</h2>
+    
+    <%= form_with url: "/create_loan_deposit", method: :post do |form| %>
+   
+        <%= form.label :loan_type %>
+        <%=select_tag "loan_type", options_for_select(["Home Loan", "Car Loan" , "Personal Loan" ,"Business Loan" ], "Home Loan")%><br/>
+
+        <%= form.label :amount   %>
+        <%= form.number_field :amount, step: :any %><br/>
+        
+        <%= form.submit "Deposit" %>
+
+    <%end%>
+
+</div>
+
+
