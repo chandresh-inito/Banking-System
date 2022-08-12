@@ -6,12 +6,19 @@ class User < ApplicationRecord
             # include DeviseTokenAuth::Concerns::User
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
-
-  # TODO: validation , fname, lname, email, password 
   has_many :accounts, dependent: :destroy
+  extend Devise::Models #added this line to extend devise model
+
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable,  :validatable , :trackable
+  include DeviseTokenAuth::Concerns::User
+
   
+
+
+
+
+
   def self.search(param)
     param.strip!
     to_send_back = (first_name_matches(param)+ last_name_matches(param) + email_matches(param)).uniq

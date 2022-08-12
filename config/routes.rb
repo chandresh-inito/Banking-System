@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :home, only: [:index]
-  
   get 'user_details' , to: "home#user_details"
   
   resources :admin
@@ -27,5 +26,26 @@ Rails.application.routes.draw do
   get 'new_loan_deposit' , to: "account#new_loan_deposit"
   post 'create_loan_deposit' , to: "account#create_loan_deposit"
   get 'loan_details' , to: "account#loan_details"
+  
 
+  namespace :api do
+
+    mount_devise_token_auth_for 'User', at: 'auth', controllers:{
+      sessions: 'api/sessions'
+    }
+
+    defaults format: :json do
+      resources :api
+      post 'loan_details' , to: "api#loan_details"
+      post 'transaction_history' , to: "api#transaction_history"
+      post 'loan_details', to: "api#loan_details"
+      post 'direct_withdraw' , to: "api#direct_withdraw"
+      post 'deposit' , to: "api#deposit"
+      post 'atm_withdraw' , to: "api#atm_withdraw"
+      post 'loan_deposit' , to: "api#loan_deposit"
+      post 'create_loan' , to: "api#create_loan"
+    end
+
+  end
+  
 end

@@ -42,7 +42,7 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[6.0]
     # t.string :email
 
     ## Tokens
-    # t.text :tokens
+    # t.text :tokens  
     add_column :users , :tokens , :text
 
     # t.timestamps

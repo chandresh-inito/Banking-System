@@ -17,3 +17,14 @@ module BankingSystem
     # the framework and any gems in your application.
   end
 end
+
+
+# config.middleware.use Rack::Cors do
+#   allow do
+#     origins '*' 
+#     resource '*',
+#     headers: :any,
+#     expose: ['access-token', 'expiry', 'token-type', 'uid', 'client'],
+#     methods: [:get, :post, :options, :delete, :put, :patch]
+#   end
+# end
