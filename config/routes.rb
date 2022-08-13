@@ -11,8 +11,18 @@ Rails.application.routes.draw do
   get 'search' , to: "admin#search"
 
   resources :account
+
+  # resources :account do
+  #   collection do
+  #     get 'credit_form'
+  #   end
+  # end
+
+  #credit
   get 'credit_form' , to: "account#credit_form"
   post 'credit', to: "account#credit"
+
+  #withdraw
   get 'withdrawal_page', to: "account#withdrawal_page"
   get 'current_account_withdrawal_form' , to: "account#current_account_withdrawal_form"
   post 'current_account_withdrawal' , to: "account#current_account_withdrawal"
@@ -21,6 +31,8 @@ Rails.application.routes.draw do
   post 'saving_account_withdrawal_atm' , to: "account#saving_account_withdrawal_atm"
   get 'saving_account_withdrawal_direct_form' , to: "account#saving_account_withdrawal_direct_form"
   post 'saving_account_withdrawal_direct' , to: "account#saving_account_withdrawal_direct"
+
+  #loan
   get 'new_loan_account' , to: "account#new_loan_account"
   post 'create_loan_account', to: "account#create_loan_account"
   get 'new_loan_deposit' , to: "account#new_loan_deposit"
@@ -35,17 +47,35 @@ Rails.application.routes.draw do
     }
 
     defaults format: :json do
-      resources :api
-      post 'loan_details' , to: "api#loan_details"
-      post 'transaction_history' , to: "api#transaction_history"
-      post 'loan_details', to: "api#loan_details"
-      post 'direct_withdraw' , to: "api#direct_withdraw"
-      post 'deposit' , to: "api#deposit"
-      post 'atm_withdraw' , to: "api#atm_withdraw"
-      post 'loan_deposit' , to: "api#loan_deposit"
-      post 'create_loan' , to: "api#create_loan"
+      resources :account
+      post 'deposit' , to: "account#deposit"
+
+      resources :loan
+      post 'loan_deposit' , to: "loan#loan_deposit"
+      post 'create_loan_account' , to: "loan#create_loan_account"
+      post 'loan_details' , to: "loan#loan_details"
+      
+
+      resources :withdraw
+      post 'atm_withdraw' , to: "withdraw#atm_withdraw"
+      post 'direct_withdraw' , to: "withdraw#direct_withdraw"
+      
+      resources :transaction
     end
 
+    # default format: :json do
+     
+    # end
+
+    # default format: :json do
+     
+    # end
+
+    # default format: :json do
+      
+    # end
+
+  
   end
   
 end

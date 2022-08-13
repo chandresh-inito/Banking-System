@@ -12,11 +12,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable,  :validatable , :trackable
   include DeviseTokenAuth::Concerns::User
-
-  
-
-
-
+  validates :first_name , :last_name , :dob, :email , :presence => true
 
 
   def self.search(param)
@@ -43,5 +39,7 @@ class User < ApplicationRecord
   def self.matches(field_name, param)
     where("#{field_name} like ?", "%#{param}")
   end
+
+
 
 end
