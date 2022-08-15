@@ -4,30 +4,33 @@ class Account<ApplicationRecord
     has_many :transactions, dependent: :destroy
     has_one :atm, dependent: :destroy
     has_many :loans , dependent: :destroy
+    after_create :transaction_and_atm
     validate :validate_account_before_opening
     validates :account_number , :amount , :presence => true
     
 
     def validate_account_before_opening
-        if (self.account_type=="Current Account" and self.amount.to_f > 100000 ) || (self.account_type=="Saving Account"  and self.amount.to_f > 10000) || (self.account_type == "Loan Account" )
+        # byebug
+        if (self.account_type=="Current Account" and self.amount.to_f >= 100000 and (Time.now.year - User.find(self.user_id).dob.year) >=18 ) || (self.account_type=="Saving Account"  and self.amount.to_f >= 10000 ) || (self.account_type == "Loan Account"  and (Time.now.year - User.find(self.user_id).dob.year) >=25 )
+            # self.errors.add(:base ,  "There is no availability of this type of account")
         else
-            errors.add( "There is no availability of this type of account")
+            self.errors.add(:base ,  "There is no availability of this type of account")
         end
     end
 
+    def transaction_and_atm
+        @account = Account.last
+        Transaction.create(medium_of_transaction: "direct" , amount: @account.amount , credit_debit: "credit", account_id: @account.id )
+        Atm.create(expiry_date: 5.year.since ,  atm_card: rand(11111111..99999999), cvv: rand(111..999),  account_id: @account.id )
+    end
 
+    
     def self.open_current_account(current_user, params, amount)
         Account.create(user_id: current_user.id, account_number: rand(1111111..9999999) , branch_id: (params[:branch]).to_i , amount: amount, account_type: "Current Account")
-        @account = Account.last
-        Transaction.create(medium_of_transaction: "direct" , amount: amount , credit_debit: "credit", account_id: @account.id )
-        Atm.create(expiry_date: 5.year.since ,  atm_card: rand(11111111..99999999), cvv: rand(111..999),  account_id: @account.id )
     end
 
     def self.open_saving_account(current_user, params, amount) 
         Account.create(user_id: current_user.id,  account_number: rand(1111111..9999999) , branch_id: (params[:branch]).to_i , amount: amount, account_type: "Saving Account")
-        @account = Account.last
-        Transaction.create(medium_of_transaction: "direct" , amount: amount , credit_debit: "credit", account_id: @account.id )
-        Atm.create(expiry_date: 5.year.since ,  atm_card: rand(11111111..99999999), cvv: rand(111..999),  account_id: @account.id )
     end
 
     def self.deposit_in_current(deposit_amount, current_user)
@@ -167,7 +170,8 @@ class Account<ApplicationRecord
         loan_canbe_given = total_deposit_amount*0.4
         
         if (required_loan_amount <= loan_canbe_given and required_loan_amount >= 500000 and params[:duration].to_i >= 24)
-            @account = Account.create(user_id: current_user.id , account_number: rand(1111111..9999999) ,  account_type: "Loan Account" , branch_id: params[:branch].to_i )
+            # byebug
+            @account = Account.create(user_id: current_user.id , account_number: rand(1111111..9999999) ,  account_type: "Loan Account" , branch_id: params[:branch].to_i , amount: params[:amount].to_i )
             Transaction.create(medium_of_transaction: "direct" , amount: -1*required_loan_amount   , credit_debit: " #{params[:loan_type]} Taken", account_id: @account.id )
             principle = 0
             if(params[:loan_type]=="Home Loan") 
@@ -267,12 +271,5 @@ class Account<ApplicationRecord
         end  
 
     end
-
-
-
-
-
-
-
 
 end

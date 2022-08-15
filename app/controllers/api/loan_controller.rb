@@ -1,5 +1,6 @@
 class   Api::LoanController < Api::ApplicationController
 
+
     def loan_details
         id = params[:id].to_i
         @user = User.find(id)
@@ -19,7 +20,7 @@ class   Api::LoanController < Api::ApplicationController
     
     def create_loan_account
         
-        @user = params[:user_id]
+        @user = User.find(params[:id].to_i)
 
         # if user have already a loan account
         if Account.where(user_id: @user.id , account_type:"Loan Account").count!=0
@@ -38,7 +39,7 @@ class   Api::LoanController < Api::ApplicationController
             loan_canbe_given = total_deposit_amount*0.4
             
             if (total_loan_amount<=loan_canbe_given and required_loan_amount>=500000 and params[:duration].to_i>=24)
-                Transaction.create(medium_of_transaction: "direct" , amount: -1*required_loan_amount   , credit_debit: "#{params[:loan_type]} Taken", account_id: @account.id )
+                Transaction.create(medium_of_transaction: "direct" , amount: -1*required_loan_amount   , credit_debit: "debit", account_id: @account.id )
                 principle = 0
                 if(params[:loan_type]=="Home Loan") 
                     principle = required_loan_amount+required_loan_amount*(params[:duration].to_i/12)*0.07
@@ -119,7 +120,7 @@ class   Api::LoanController < Api::ApplicationController
             end
 
         else
-            
+            # byebug
             required_loan_amount = params[:amount].to_f
             #total_deposit_account
             saving_amount = Account.where(user_id: @user.id , account_type: "Saving Account").first.amount.to_f
@@ -130,7 +131,7 @@ class   Api::LoanController < Api::ApplicationController
             
             if (required_loan_amount <= loan_canbe_given and required_loan_amount >= 500000 and params[:duration].to_i >= 24)
                 @account = Account.create(user_id: @user.id , account_number: rand(1111111..9999999) ,  account_type: "Loan Account" , branch_id: params[:branch].to_i )
-                Transaction.create(medium_of_transaction: "direct" , amount: -1*required_loan_amount   , credit_debit: " #{params[:loan_type]} Taken", account_id: @account.id )
+                Transaction.create(medium_of_transaction: "direct" , amount: -1*required_loan_amount   , credit_debit: "debit", account_id: @account.id )
                 principle = 0
                 if(params[:loan_type]=="Home Loan") 
                     principle = required_loan_amount+required_loan_amount*(params[:duration].to_i/12)*0.07
@@ -158,7 +159,7 @@ class   Api::LoanController < Api::ApplicationController
 
 
     def loan_deposit
-        @user = params[:user_id]
+        @user = User.find(params[:user_id].to_i)
         
         #if user have no loan account
        if @user.accounts.where(account_type: "Loan Account").count==0
@@ -182,7 +183,7 @@ class   Api::LoanController < Api::ApplicationController
                    remaining_loan =  loan.principal.to_d - deposit_amount    
                    loan.principal = remaining_loan
                    loan.save
-                   Transaction.create(medium_of_transaction: "direct" , amount: deposit_amount   , credit_debit: " #{params[:loan_type]} Deposit", account_id: @account.id )
+                   Transaction.create(medium_of_transaction: "direct" , amount: deposit_amount   , credit_debit: "credit", account_id: @account.id )
                    render json: {
                         "notice": "Loan Deposited"
                     }

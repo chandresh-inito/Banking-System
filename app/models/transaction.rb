@@ -6,8 +6,7 @@ class Transaction<ApplicationRecord
     def validation_before_create_transaction
         if self.amount>=0 and (self.credit_debit == "credit" or self.credit_debit == "debit") and (self.medium_of_transaction =="direct" or  self.medium_of_transaction =="atm")
         else  
-            errors.add("Invalid Credential to withdraw amount")
-
+            self.errors.add(:base , "Invalid Credential to withdraw or credit amount")
         end
     end
 

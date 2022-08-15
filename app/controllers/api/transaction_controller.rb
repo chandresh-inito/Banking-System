@@ -1,18 +1,28 @@
-class   Api::LoanController < Api::ApplicationController
+class   Api::TransactionController < Api::ApplicationController
+    
+    def index
+        @transaction = Transaction.all
+        render json: {
+            "transactions": @transaction
+        }
+    end
 
     def show
-        @account = Account.where(user_id: params[:user_id], account_type: params[:account_type])
+        @user = User.find(params[:id].to_i)
         
-        if @account.count != 0
+        if @user.accounts.count != 0
             render json: {
-                "transactions": @account.first.transactions
+                # "users": @user
+                "transaction1": Account.where(user_id: @user.id , account_type: "Saving Account").first.transactions,
+                "transaction2": Account.where(user_id: @user.id , account_type: "Current Account").first.transactions,
+                "transaction3": Account.where(user_id: @user.id , account_type: "Loan Account").first.transactions
+
             }
         else
             render json: {
                 "alert": "You have entered wrong account"
             }
         end
-
     end
 
 end

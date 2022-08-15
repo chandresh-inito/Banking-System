@@ -63,17 +63,6 @@ Rails.application.routes.draw do
       resources :transaction
     end
 
-    # default format: :json do
-     
-    # end
-
-    # default format: :json do
-     
-    # end
-
-    # default format: :json do
-      
-    # end
 
   
   end

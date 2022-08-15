@@ -12,7 +12,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable,  :validatable , :trackable
   include DeviseTokenAuth::Concerns::User
-  validates :first_name , :last_name , :dob, :email , :presence => true
+  # validates :first_name , :last_name , :presence => true
+  validates :email , uniqueness: true
 
 
   def self.search(param)

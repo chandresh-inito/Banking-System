@@ -12,41 +12,25 @@ class AccountController<ApplicationController
         @user = current_user
     end
     
-    #open saving and current account 
-    def create
+    def create    # open saving and current account 
         @user = current_user
         if params[:account_type] == "Current Account"
             if (Account.where(user_id: @user.id, account_type: "Current Account")).count == 0
                 temp = params[:minimumn_deposit]
                 amount = temp.to_f
-                if amount>=100000
-                    Account.open_current_account(current_user, params, amount) 
-                    flash[:notice] = "Thank You , Current Account Created Successfully."
-                elsif
-                    flash[:alert] = "Minimum deposit should be 100000 for opening of Saving Account."
-                end
-            elsif
-                flash[:alert] = "You have already a Current Account."
-            end 
+                Account.open_current_account(current_user, params, amount) 
+            end
         elsif params[:account_type] == "Saving Account"
             if (Account.where(user_id: @user.id, account_type: "Saving Account")).count == 0
                 temp = params[:minimumn_deposit]
                 amount = temp.to_f
-                if amount>=10000
-                    Account.open_saving_account(current_user,params,amount)
-                    flash[:notice] = "Saving Account Created Successfully. "
-                elsif
-                    flash[:alert] = "Minimum deposit should be 10000 for opening of Saving Account."
-                end
-            elsif
-                flash[:alert] = "You have already a Saving Account."
+                Account.open_saving_account(current_user,params,amount)
             end
         end
         redirect_to root_path
     end
 
     def credit_form  
-  
     end
 
     def credit
@@ -56,17 +40,12 @@ class AccountController<ApplicationController
             if (Account.where(user_id: current_user.id, account_type: "Current Account")).count !=0 and deposit_amount>0
                 Account.deposit_in_current(deposit_amount,current_user)
                 flash[:notice] = "#{deposit_amount} is successfully deposited in your Current Account"
-            elsif
-                flash[:alert] = "First open the current account then deposit or Enter correct amount."
             end
         elsif params[:account_type] == "Saving Account"
             temp = params[:deposit_amount]
             deposit_amount = temp.to_f
             if (Account.where(user_id: current_user.id, account_type: "Saving Account")).count !=0 and deposit_amount>0
                 Account.deposit_in_saving(deposit_amount,current_user)
-                flash[:notice] = "#{deposit_amount} is successfully deposited in your Saving Account"
-            elsif   
-                flash[:alert] = "First open the saving account then deposit or Enter correct amount."
             end
         end
         redirect_to root_path
@@ -98,11 +77,7 @@ class AccountController<ApplicationController
                     Transaction.create(medium_of_transaction: "direct" , amount: withdrawal_amount , credit_debit: "debit", account_id: @account.id )
                     flash[:notice] = "#{@user.first_name},  You succesfully withdrawal #{withdrawal_amount} from your Current Account"
                 end
-            elsif
-                flash[:alert] = "Sorry, You have not sufficient amount to withdrawal"
             end
-        elsif
-            flash[:alert] = "Sorry, Wrong Credentials"
         end
         redirect_to root_path
     end
@@ -220,24 +195,20 @@ class AccountController<ApplicationController
             loan_canbe_given = total_deposit_amount*0.4
 
             if (total_loan_amount<=loan_canbe_given and required_loan_amount>=500000 and params[:duration].to_i>=24)
-                Transaction.create(medium_of_transaction: "direct" , amount: -1*required_loan_amount   , credit_debit: "#{params[:loan_type]} Taken", account_id: @account.id )
+                Transaction.create(medium_of_transaction: "direct" , amount: -1*required_loan_amount   , credit_debit: "debit", account_id: @account.id )
                 principle = 0
                 if(params[:loan_type]=="Home Loan") 
                     principle = required_loan_amount+required_loan_amount*(params[:duration].to_i/12)*0.07
                     Account.home_loan(current_user, params, principle)
-                    flash[:notice] = "Hi #{@current_user.first_name} ,  Your #{params[:loan_type]} of amount #{params[:amount].to_f } is approved" 
                 elsif (params[:loan_type]=="Car Loan")
                     principle = required_loan_amount+required_loan_amount*(params[:duration].to_i/12)*0.08
                     Account.car_loan(current_user, params, principle)
-                    flash[:notice] = "Hi #{@current_user.first_name} ,  Your #{params[:loan_type]} of amount #{params[:amount].to_f } is approved" 
                 elsif (params[:loan_type]=="Personal Loan")
                     principle = required_loan_amount+required_loan_amount*(params[:duration].to_i/12)*0.12
                     Account.personal_loan(current_user, params, principle)
-                    flash[:notice] = "Hi #{@current_user.first_name} ,  Your #{params[:loan_type]} of amount #{params[:amount].to_f } is approved" 
                 elsif (params[:loan_type]=="Business Loan")
                     principle = required_loan_amount+required_loan_amount*(params[:duration].to_i/12)*0.15
                     Account.business_loan(current_user, params, principle)
-                    flash[:notice] = "Hi #{@current_user.first_name} ,  Your #{params[:loan_type]} of amount #{params[:amount].to_f } is approved" 
                 end
             else
                 flash[:alert] = "Sorry, You have not sufficient amount or sufficient criteria by bank to take loan" 

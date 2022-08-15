@@ -1,6 +1,7 @@
-class   Api::ApiController < Api::ApplicationController
+class   Api::AccountController < Api::ApplicationController
     before_action :authenticate_user!
-    
+    protect_from_forgery with: :null_session
+
     def index 
         accounts = Account.all
         render json: accounts
@@ -26,14 +27,14 @@ class   Api::ApiController < Api::ApplicationController
             render json: {
                 "alert": "Please deposit minimum account"
             }
-        elsif params[:account_type] == 'Current Account' && ((Time.now.to_date -  @user.dob.to_date).to_i/365) < 18
+        elsif params[:account_type] == 'Current Account' && ((Time.now.year -  @user.dob.to_time.year)) < 18
             render json: {
                 "alert": "Minimum age for Current account is 18"
             }
         else
-            @account = Account.create(user_id: @user.id, type_of_account: params[:account_type], branch_id: (params[:branch_id]).to_i,amount: (params[:amount]).to_f, number: rand(1111111..9999999))
+            @account = Account.create(user_id: @user.id, account_type: params[:account_type], branch_id: (params[:branch_id]).to_i,amount: (params[:amount]).to_f, account_number: rand(1111111..9999999))
             Transaction.create(medium_of_transaction: "direct", credit_debit: "credit",account_id: @account.id,amount: (params[:amount]).to_f)
-            @atm = Atm.create(account_id: @account.id,expiry_date: DateTime.now.next_year(5).to_date,cvv: rand(111..999),number: rand(1111111..9999999))
+            @atm = Atm.create(account_id: @account.id,expiry_date: DateTime.now.next_year(5).to_date,cvv: rand(111..999),atm_card: rand(1111111..9999999))
             render json: {
                 "notice": "Your account sucessfully opened"
             }
@@ -42,7 +43,7 @@ class   Api::ApiController < Api::ApplicationController
 
 
     def deposit 
-        @user = params[:user_id]
+        @user = User.find(params[:user_id].to_i)
         if params[:account_type] == "Current Account"
             temp = params[:deposit_amount]
             deposit_amount = temp.to_f

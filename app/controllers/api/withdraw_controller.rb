@@ -1,11 +1,12 @@
 class   Api::WithdrawController < Api::ApplicationController
 
     def atm_withdraw
-        @user = params[:user_id]
-        @account = (Account.where(user_id: @user.id, account_type: "Saving Account")).first
+        @user = User.find(params[:user_id].to_i)
+        @account = Account.where(user_id: @user.id, account_type: "Saving Account").first 
         @atm  = Atm.where(account_id: @account.id).first
-
-        if ( @user.first_name == params[:first_name] and @user.email == params[:email] and @atm.atm_card == params[:atm_card].to_i and @atm.cvv == (params[:cvv].to_i) and params[:withdrawal_amount].to_f>0)
+        
+        # byebug
+        if ( @user.email == params[:email] and @atm.atm_card == params[:atm_card].to_i and @atm.cvv == params[:cvv] and params[:withdrawal_amount].to_f>0)
             
             # @account = (Account.where(user_id: @user.id, account_type: "Saving Account")).first
             temp = params[:withdrawal_amount]
@@ -61,7 +62,7 @@ class   Api::WithdrawController < Api::ApplicationController
 
         elsif
             render json: {
-                "alert": "You have not Saving Account"
+                "alert": "You have entered wrong credential"
             }
         end
     end
@@ -69,7 +70,7 @@ class   Api::WithdrawController < Api::ApplicationController
 
      
     def direct_withdraw
-        @account = Account.where(params[:account_number])
+        @account = Account.where(account_number: params[:account_number].to_i)
         if @account.count!=0
             if  params[:amount].to_f < 0
                 message_and_render("alert","Wrong Amount")
@@ -78,11 +79,11 @@ class   Api::WithdrawController < Api::ApplicationController
                     "alert": "Insufficient balance"
                 }
             else
-                @account.first.amount = @account.amount - params[:amount].to_f
-                @account.save
-                Transaction.create(type_of_transaction: "direct", medium: "debit",account_id: @account.id,amount: (params[:amount]).to_f)
+                @account.first.amount = @account.first.amount - params[:amount].to_f
+                @account.first.save
+                Transaction.create(medium_of_transaction: "direct", credit_debit: "debit",account_id: @account.first.id,amount: (params[:amount]).to_f)
                 render json: {
-                    "alert": "Insufficient balance"
+                    "notice": "Money withdrawal"
                 }
             end
         elsif
