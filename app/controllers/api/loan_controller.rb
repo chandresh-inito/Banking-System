@@ -39,7 +39,7 @@ class   Api::LoanController < Api::ApplicationController
             loan_canbe_given = total_deposit_amount*0.4
             
             if (total_loan_amount<=loan_canbe_given and required_loan_amount>=500000 and params[:duration].to_i>=24)
-                Transaction.create(medium_of_transaction: "direct" , amount: -1*required_loan_amount   , credit_debit: "debit", account_id: @account.id )
+                Transaction.create(medium_of_transaction: "direct" , amount: required_loan_amount   , credit_debit: "debit", account_id: @account.id )
                 principle = 0
                 if(params[:loan_type]=="Home Loan") 
                     principle = required_loan_amount+required_loan_amount*(params[:duration].to_i/12)*0.07
